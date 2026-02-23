@@ -39,7 +39,7 @@ export function Contact() {
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
-              href="mailto:agbomartinsejiofor@gmail.com"
+              href="mailto:ejioformartins99@gmail.com"
               className="group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20"
             >
               <Mail className="h-4 w-4" />

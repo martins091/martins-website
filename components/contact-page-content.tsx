@@ -1,30 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
-import { Mail, MapPin, Phone, Github, Linkedin, Twitter, Send, CheckCircle } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  Phone,
+  Github,
+  Linkedin,
+  Twitter,
+  Send,
+  CheckCircle,
+} from "lucide-react";
 
 export function ContactPageContent() {
-  const [state, handleSubmit] = useForm("mreaankg"); // your Formspree form ID
+  const [state, handleSubmit] = useForm("mbdapzae");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // When Formspree succeeds, show confirmation message
-  if (state.succeeded && !isSubmitted) {
-    setIsSubmitted(true);
-    setTimeout(() => setIsSubmitted(false), 4000); // hide after 4s
-  }
+  // Handle success message safely
+  useEffect(() => {
+    if (state.succeeded) {
+      setIsSubmitted(true);
+      const timer = setTimeout(() => setIsSubmitted(false), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [state.succeeded]);
 
   return (
     <div className="px-6 py-16">
       <div className="mx-auto max-w-6xl">
+        {/* Header */}
         <div className="mb-16">
           <p className="mb-2 font-mono text-sm text-primary">Get In Touch</p>
           <h1 className="mb-4 font-serif text-4xl font-bold text-foreground sm:text-5xl">
-            <span className="text-balance">Let's work together.</span>
+            Let&apos;s work together.
           </h1>
           <p className="max-w-2xl text-lg text-muted-foreground">
-            Have a project idea, need a developer, or looking for a coding instructor?
-            I'd love to hear from you. Fill out the form or reach out via any channel below.
+            Have a project idea, need a developer, or looking for a coding
+            instructor? I&apos;d love to hear from you. Fill out the form or
+            reach out via any channel below.
           </p>
         </div>
 
@@ -34,59 +48,52 @@ export function ContactPageContent() {
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
-                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-foreground">
+                  <label className="mb-2 block text-sm font-medium">
                     Full Name
                   </label>
                   <input
                     type="text"
-                    id="name"
                     name="name"
                     required
                     placeholder="John Doe"
-                    className="w-full rounded-xl border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary/60 focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    className="w-full rounded-xl border bg-secondary px-4 py-3 text-sm focus:ring-1 focus:ring-primary/30"
                   />
                   <ValidationError prefix="Name" field="name" errors={state.errors} />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-foreground">
+                  <label className="mb-2 block text-sm font-medium">
                     Email Address
                   </label>
                   <input
                     type="email"
-                    id="email"
                     name="email"
                     required
                     placeholder="john@example.com"
-                    className="w-full rounded-xl border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary/60 focus:outline-none focus:ring-1 focus:ring-primary/30"
+                    className="w-full rounded-xl border bg-secondary px-4 py-3 text-sm focus:ring-1 focus:ring-primary/30"
                   />
                   <ValidationError prefix="Email" field="email" errors={state.errors} />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="subject" className="mb-2 block text-sm font-medium text-foreground">
-                  Subject
-                </label>
+                <label className="mb-2 block text-sm font-medium">Subject</label>
                 <input
                   type="text"
-                  id="subject"
                   name="subject"
                   required
                   placeholder="Project inquiry"
-                  className="w-full rounded-xl border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary/60 focus:outline-none focus:ring-1 focus:ring-primary/30"
+                  className="w-full rounded-xl border bg-secondary px-4 py-3 text-sm"
                 />
-                <ValidationError prefix="Subject" field="subject" errors={state.errors} />
               </div>
 
               <div>
-                <label htmlFor="service" className="mb-2 block text-sm font-medium text-foreground">
+                <label className="mb-2 block text-sm font-medium">
                   Service Needed
                 </label>
                 <select
-                  id="service"
                   name="service"
-                  className="w-full rounded-xl border border-border bg-secondary px-4 py-3 text-sm text-foreground transition-colors focus:border-primary/60 focus:outline-none focus:ring-1 focus:ring-primary/30"
+                  className="w-full rounded-xl border bg-secondary px-4 py-3 text-sm"
                 >
                   <option value="">Select a service</option>
                   <option value="fullstack">Fullstack Development</option>
@@ -96,28 +103,23 @@ export function ContactPageContent() {
                   <option value="training">Coding Training</option>
                   <option value="other">Other</option>
                 </select>
-                <ValidationError prefix="Service" field="service" errors={state.errors} />
               </div>
 
               <div>
-                <label htmlFor="message" className="mb-2 block text-sm font-medium text-foreground">
-                  Message
-                </label>
+                <label className="mb-2 block text-sm font-medium">Message</label>
                 <textarea
-                  id="message"
                   name="message"
                   required
                   rows={5}
                   placeholder="Tell me about your project..."
-                  className="w-full resize-none rounded-xl border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary/60 focus:outline-none focus:ring-1 focus:ring-primary/30"
+                  className="w-full resize-none rounded-xl border bg-secondary px-4 py-3 text-sm"
                 />
-                <ValidationError prefix="Message" field="message" errors={state.errors} />
               </div>
 
               <button
                 type="submit"
                 disabled={state.submitting}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
               >
                 {isSubmitted ? (
                   <>
@@ -135,107 +137,69 @@ export function ContactPageContent() {
           </div>
 
           {/* Contact Info */}
-          <div className="lg:col-span-2">
-            <div className="flex flex-col gap-6">
-              <div className="rounded-2xl border border-border bg-card p-8">
-                <h3 className="mb-6 text-lg font-semibold text-foreground">Contact Info</h3>
-                <div className="flex flex-col gap-5">
-                  <a
-                    href="mailto:hello@martinsejiofor.dev"
-                    className="flex items-center gap-4 text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <Mail className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Email</p>
-                      <p className="text-sm font-medium text-foreground">agbomartinsejiofor@gmail.com</p>
-                    </div>
-                  </a>
-                  <div className="flex items-center gap-4 text-muted-foreground">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <MapPin className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Location</p>
-                      <p className="text-sm font-medium text-foreground">Lagos, Nigeria</p>
-                    </div>
+          <div className="lg:col-span-2 flex flex-col gap-6">
+            <div className="rounded-2xl border bg-card p-8">
+              <h3 className="mb-6 text-lg font-semibold">Contact Info</h3>
+
+              <div className="flex flex-col gap-5">
+                {/* Email */}
+                <a
+                  href="mailto:ejioformartins99@gmail.com"
+                  className="flex items-center gap-4 hover:text-foreground"
+                >
+                  <Mail className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-xs">Email</p>
+                    <p className="text-sm font-medium">
+                      ejioformartins99@gmail.com
+                    </p>
                   </div>
-                  <div className="flex items-center gap-4 text-muted-foreground">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <Phone className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Availability</p>
-                      <p className="text-sm font-medium text-foreground">Open for work</p>
-                    </div>
+                </a>
+
+                {/* Phone */}
+                <a
+                  href="tel:+2348137560846"
+                  className="flex items-center gap-4 hover:text-foreground"
+                >
+                  <Phone className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-xs">Phone</p>
+                    <p className="text-sm font-medium">0813 756 0846</p>
+                  </div>
+                </a>
+
+                {/* Location */}
+                <div className="flex items-center gap-4">
+                  <MapPin className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-xs">Location</p>
+                    <p className="text-sm font-medium">Lagos, Nigeria</p>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="rounded-2xl border border-border bg-card p-8">
-                <h3 className="mb-6 text-lg font-semibold text-foreground">Follow Me</h3>
-                <div className="flex gap-3">
-                  <a
-                    href="https://github.com/martins091"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-border text-muted-foreground transition-all hover:border-primary/40 hover:text-foreground hover:bg-secondary"
-                    aria-label="GitHub"
-                  >
-                    <Github className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/martins-ejiofor-a9b32b26a/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-border text-muted-foreground transition-all hover:border-primary/40 hover:text-foreground hover:bg-secondary"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </a>
-                  <a
-                   href="https://x.com/Martinz_TyNo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-11 w-11 items-center justify-center rounded-xl border border-border text-muted-foreground transition-all hover:border-primary/40 hover:text-foreground hover:bg-secondary"
-                    aria-label="Twitter"
-                  >
-                    <Twitter className="h-5 w-5" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Services summary */}
-              <div className="rounded-2xl border border-primary/20 bg-primary/5 p-8">
-                <h3 className="mb-4 text-lg font-semibold text-foreground">Services I Offer</h3>
-                <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    Fullstack Web Development (MERN)
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    Next.js / NestJS Applications
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    WordPress Website Development
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    Frontend Development Training
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                    API Design & Development
-                  </li>
-                </ul>
+            {/* Socials */}
+            <div className="rounded-2xl border bg-card p-8">
+              <h3 className="mb-6 text-lg font-semibold">Follow Me</h3>
+              <div className="flex gap-3">
+                <a href="https://github.com/martins091" target="_blank">
+                  <Github />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/martins-ejiofor-a9b32b26a/"
+                  target="_blank"
+                >
+                  <Linkedin />
+                </a>
+                <a href="https://x.com/Martinz_TyNo" target="_blank">
+                  <Twitter />
+                </a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

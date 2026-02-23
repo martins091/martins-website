@@ -67,11 +67,13 @@ export function AboutPageContent() {
                 Contact Me
               </a>
               <a
-                href="/resume.pdf"
+                href="https://docs.google.com/document/d/1c8TocEGhdoK01uLuwygtQV6UiIv7ipffWewin6hpwQk/edit?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium text-foreground transition-all hover:border-primary/40 hover:bg-secondary"
               >
                 <Download className="h-4 w-4" />
-                Download CV
+                View Resume
               </a>
             </div>
           </div>
@@ -118,9 +120,8 @@ export function AboutPageContent() {
               {timeline.map((item, i) => (
                 <div
                   key={i}
-                  className={`relative flex items-start gap-8 pl-12 md:pl-0 ${
-                    i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
+                  className={`relative flex items-start gap-8 pl-12 md:pl-0 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    }`}
                 >
                   {/* Dot */}
                   <div className="absolute left-2.5 top-1.5 h-3 w-3 rounded-full border-2 border-primary bg-background md:left-1/2 md:-translate-x-1/2" />
